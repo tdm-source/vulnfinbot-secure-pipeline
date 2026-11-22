@@ -1,0 +1,30 @@
+rules:
+  - id: python-eval-usage
+    pattern: eval(...)
+    message: Use of eval() can lead to arbitrary code execution.
+    languages: [python]
+    severity: ERROR
+
+  - id: python-exec-usage
+    pattern: exec(...)
+    message: Use of exec() can lead to arbitrary code execution.
+    languages: [python]
+    severity: ERROR
+
+  - id: subprocess-shell-true
+    pattern: subprocess.$FUNC(..., shell=True, ...)
+    message: shell=True enables command injection when input is user-controlled.
+    languages: [python]
+    severity: ERROR
+
+  - id: flask-debug-true
+    pattern: $APP.run(..., debug=True, ...)
+    message: Flask debug mode exposes the Werkzeug debugger and must not be used in production.
+    languages: [python]
+    severity: WARNING
+
+  - id: hardcoded-password
+    pattern-regex: (?i)(password|secret|api_key)\s*=\s*["'][^"']+["']
+    message: Possible hardcoded credential.
+    languages: [python]
+    severity: WARNING
